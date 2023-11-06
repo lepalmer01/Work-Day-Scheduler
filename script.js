@@ -1,5 +1,7 @@
 $(function () {
-    var CurrentHour = dayjs().hour();
+
+    var currentHour = dayjs().hour();
+    
     var rightNow = dayjs().format('dddd D MMMM, YYYY');
     $("#currentDay").text(rightNow);
 
@@ -21,4 +23,22 @@ $(function () {
     $("hour-15 .description").val(localStorage.getItem("hour-15"))
     $("hour-16 .description").val(localStorage.getItem("hour-16"))
     $("hour-17 .description").val(localStorage.getItem("hour-17"))
-});
+
+/*Dynamically style time-blocks based on current time*/    
+$('.time-block').each(function () {
+    var timeBlockHour = parseInt($(this).attr("id").split("-")[1])
+
+    if (timeBlockHour < currentHour) {
+        $(this).addClass('past');
+
+    } else if (timeBlockHour ===currentHour) {
+        $(this).removeClass('past');
+        $(this).addClass('present');
+
+    } else {
+        $(this).removeClass('past');
+        $(this).removeClass('present');
+        $(this).addClass('future')
+    }
+})
+})
